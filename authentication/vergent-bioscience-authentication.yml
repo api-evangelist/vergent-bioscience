@@ -1,0 +1,40 @@
+generated: '2026-09-02'
+method: probed
+source: https://www.vergentbio.com/_api/mcp
+description: >-
+  Vergent Bioscience publishes no REST/GraphQL API and therefore no OpenAPI securitySchemes.
+  The only callable surface on its own hosts is the anonymous Wix Site MCP endpoint, whose
+  access model was established by direct probe and is stated in the company's own llms.txt.
+surfaces:
+  - name: Site MCP endpoint
+    url: https://www.vergentbio.com/_api/mcp
+    schemes:
+      - type: none
+        applies_to: transport + tools/list + read tools (GetBusinessDetails, SearchInSite, docs tools)
+        evidence: >-
+          POST tools/list with no Authorization header returned HTTP 200 and the full 9-tool
+          manifest on 2026-09-02; a tools/call of GetBusinessDetails likewise returned 200.
+        docs: https://www.vergentbio.com/llms.txt
+        docs_quote: 'No authentication required to connect to the MCP endpoint'
+      - type: bearer-visitor-token
+        applies_to: CallWixSiteAPI, ExecuteWixAPI
+        obtained_via: GenerateVisitorToken tool on the same endpoint
+        anonymous_issuance: true
+        evidence: >-
+          The probed inputSchema for both tools marks visitorToken as required; the
+          GenerateVisitorToken tool takes no parameters and mints a session for any caller.
+        note: >-
+          This is a session identity, not a credential the provider issues to a developer.
+          There is no key, no signup, and no account.
+oauth2: false
+openid_connect: false
+mutual_tls: false
+api_keys: false
+scopes: none
+notes:
+  - >-
+    scopes/ is deliberately absent: there is no OAuth surface to enumerate, and an empty
+    scopes artifact would misrepresent the model.
+  - >-
+    Company hosts serve no /.well-known/openid-configuration or /.well-known/
+    oauth-authorization-server (both HTTP 400 — see well-known/).

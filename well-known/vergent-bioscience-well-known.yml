@@ -1,0 +1,53 @@
+generated: '2026-09-02'
+method: probed
+source: https://www.vergentbio.com/
+description: >-
+  Named-path probe of the RFC 8615 well-known namespace on every host Vergent Bioscience
+  controls. Every path missed. The site is a Wix-hosted marketing site, and the Wix edge
+  answers HTTP 400 with an HTML error page for any /.well-known/* path rather than 404 —
+  no well-known document of any kind is served. No WellKnown or SecurityTxt pointer is
+  emitted, because nothing was found.
+hosts:
+  - host: www.vergentbio.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 400
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 400
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 400
+        file: null
+      - path: /.well-known/oauth-protected-resource
+        status: 400
+        file: null
+      - path: /.well-known/api-catalog
+        status: 400
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 400
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 400
+        file: null
+      - path: /.well-known/agent.json
+        status: 400
+        file: null
+  - host: vergentbio.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 400
+        file: null
+  - host: www.vergentbio.com/_api/mcp
+    documents:
+      - path: /_api/mcp/.well-known/oauth-protected-resource
+        status: 404
+        file: null
+notes:
+  - >-
+    All 400 responses returned `<!DOCTYPE html>` bodies, i.e. the Wix platform error page,
+    not a document. Treated as misses per the pipeline's HTML-shell rule.
+  - >-
+    The MCP endpoint at /_api/mcp requires no authentication, so there is no protected-resource
+    metadata to serve; the 404 there is expected and consistent with the anonymous-access model.

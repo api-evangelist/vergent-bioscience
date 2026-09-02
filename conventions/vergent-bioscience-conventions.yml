@@ -1,0 +1,90 @@
+generated: '2026-09-02'
+method: probed
+source: https://www.vergentbio.com/_api/mcp
+description: >-
+  Cross-cutting runtime semantics for the only callable surface Vergent Bioscience serves —
+  the anonymous Wix Site MCP endpoint on www.vergentbio.com. Derived from the probed
+  tools/list manifest, the observed response headers, and the provider's published llms.txt.
+  There is no REST/GraphQL API, so most conventions below are recorded as not-applicable
+  rather than guessed.
+surface: https://www.vergentbio.com/_api/mcp
+
+auth_style:
+  model: anonymous
+  detail: >-
+    No credentials to connect. Two write-capable tools require a visitorToken minted
+    anonymously on the same endpoint. See authentication/vergent-bioscience-authentication.yml.
+
+transport:
+  protocol: JSON-RPC 2.0 over HTTPS POST
+  content_type: application/json; charset=utf-8
+  accept: 'application/json, text/event-stream'
+  session: >-
+    Server issues an Mcp-Session-Id response header (observed on the tools/list probe,
+    2026-09-02).
+
+error_envelope:
+  style: json-rpc-2.0
+  shape: '{"jsonrpc":"2.0","id":<id>,"error":{"code":<int>,"message":<string>}}'
+  rfc9457: false
+  note: >-
+    No error catalog is published and no error responses were deliberately induced, so
+    errors/ is not emitted. Recording the envelope shape only, which the JSON-RPC 2.0
+    conformance entry establishes.
+
+idempotency:
+  supported: unknown
+  header: null
+  note: >-
+    Nothing in the probed manifest or in the provider's published text documents an
+    idempotency key, replay window, or retry semantics. No Idempotency pointer is emitted.
+
+pagination:
+  applicable: false
+  note: 'No collection-returning REST operations exist on any company host.'
+
+versioning:
+  scheme: none-published
+  note: >-
+    The MCP endpoint carries no version path segment and the manifest declares no protocol
+    version. Wix versions the platform; Vergent publishes no versioning policy of its own.
+
+rate_limit_signaling:
+  headers_observed: none
+  note: >-
+    The tools/list and tools/call responses carried no X-RateLimit-*, RateLimit-* or
+    Retry-After headers. See rate-limits/vergent-bioscience-rate-limits.yml.
+
+request_tracing:
+  header: x-wix-request-id
+  note: >-
+    Observed on the probed responses. It is a Wix platform request id, useful for correlating
+    with the platform rather than with Vergent.
+
+reversibility:
+  grade: na
+  rationale: >-
+    The surface Vergent exposes is effectively read-only. Seven of the nine probed tools are
+    read/search/documentation tools with no side effects. The two that can write —
+    CallWixSiteAPI and ExecuteWixAPI — are generic Wix platform passthroughs, and this site
+    installs no bookings, ecommerce, or forms solution whose writes an anonymous visitor could
+    perform; it is a static marketing and investor site for a clinical-stage biotech.
+  reversal_operations: []
+  windows_documented: false
+  note: >-
+    No cancel/refund/void/undo/restore operation, and no reversal window, is documented
+    anywhere on the provider's surface. Nothing is asserted here that the docs do not state.
+    ExecuteWixAPI does carry an explicit `hasMutations` boolean in its required inputSchema,
+    which lets a caller declare intent before acting — recorded as an observation, not as a
+    reversal path, because it does not undo anything.
+
+dry_run_mode:
+  grade: na
+  note: 'No write surface to rehearse.'
+
+cross_links:
+  authentication: authentication/vergent-bioscience-authentication.yml
+  conformance: conformance/vergent-bioscience-conformance.yml
+  mcp: mcp/vergent-bioscience-mcp.yml
+  rate_limits: rate-limits/vergent-bioscience-rate-limits.yml
+  well_known: well-known/vergent-bioscience-well-known.yml

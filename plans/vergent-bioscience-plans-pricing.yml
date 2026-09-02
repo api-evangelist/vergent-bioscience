@@ -1,0 +1,24 @@
+generated: '2026-09-02'
+method: searched
+source: https://www.vergentbio.com/
+description: >-
+  Vergent Bioscience publishes no plans, pricing, tiers, quotas or purchase path of any kind.
+  It is a clinical-stage biotechnology company; its lead product, abenacianine for injection
+  (VGT-309), is an investigational imaging agent that has not been approved by the FDA for
+  any indication, so it is not sold. The site has no pricing page and no signup or login.
+plan_count: 0
+plans: []
+evidence:
+  - url: https://www.vergentbio.com/
+    status: 200
+    note: >-
+      Full site navigation harvested: Our Technology, Therapeutic Focus, About Us, News,
+      Contact Us, Investors, Publications, Expanded Access, Clinical Summary. No Pricing,
+      Plans, products-for-sale, Sign Up or Login destination exists.
+  - url: https://www.vergentbio.com/sitemap.xml
+    status: 200
+    note: 'Sitemap index served; no pricing, plans, or account URL in the site structure.'
+notes:
+  - >-
+    Not a sales gate and not a thin measurement — this company has nothing priced. Recorded
+    as a real zero rather than omitted, and no Pricing or SignUp pointer is emitted.

@@ -1,23 +1,102 @@
 aid: vergent-bioscience
 name: Vergent Bioscience
-description: 'Vergent Bioscience is a company surfaced via the API Evangelist harvest backlog (source:
-  secondary-market) and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Vergent Bioscience is a clinical-stage biotechnology company headquartered in Minneapolis,
+  Minnesota, developing tumor-targeted fluorescent imaging agents for real-time intraoperative
+  tumor visualization. Its lead compound, abenacianine for injection (VGT-309), is designed to
+  let surgeons see previously undetected or difficult-to-find tumors during minimally invasive
+  and robotic-assisted cancer surgery so that all tumor tissue can be removed in a single
+  procedure. The company is first evaluating VGT-309 in lung cancer with the stated intent to
+  expand into a wide range of solid tumors. Vergent publishes no developer program, no REST or
+  GraphQL API, and no SDKs — it is a therapeutics and imaging-agent developer, not a software
+  vendor. The only machine-readable surfaces on its own domain are a Wix-platform-generated
+  llms.txt and a live, anonymous Model Context Protocol endpoint at /_api/mcp that exposes
+  nine site-content and Wix-platform tools.
 url: https://raw.githubusercontent.com/api-evangelist/vergent-bioscience/refs/heads/main/apis.yml
+image: https://static.wixstatic.com/media/608efe_20a2e114600643b69837255747a0ffe5~mv2.jpg
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment
 specificationVersion: '0.20'
 created: '2026-09-02'
 modified: '2026-09-02'
 tags:
 - Company
-apis: []
+- Biotechnology
+- Life Sciences
+- Healthcare
+- Medical Imaging
+- Oncology
+- Surgery
+- Clinical Trials
+- Model Context Protocol
+apis:
+- name: Vergent Bioscience Site MCP
+  description: >-
+    A live, anonymous Model Context Protocol endpoint served on the company's own host and
+    advertised from its own llms.txt. Provided by the Wix Site MCP platform rather than
+    authored by Vergent, it exposes nine tools — site content search, business details, Wix
+    documentation lookups, anonymous visitor-token issuance, and two generic Wix REST API
+    passthroughs. A tools/list probe on 2026-09-02 returned HTTP 200 with full JSON Schema
+    input schemas and required no credentials.
+  humanURL: https://www.vergentbio.com/llms.txt
+  baseURL: https://www.vergentbio.com/_api/mcp
+  tags:
+  - Model Context Protocol
+  - Site Content
+  properties:
+  - type: MCPServer
+    url: mcp/vergent-bioscience-mcp.yml
+  - type: Authentication
+    url: authentication/vergent-bioscience-authentication.yml
+  - type: Conventions
+    url: conventions/vergent-bioscience-conventions.yml
+  - type: RateLimits
+    url: rate-limits/vergent-bioscience-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/vergent-bioscience-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/vergent-bioscience_stock/
+  url: https://www.vergentbio.com/
+- type: LLMsTxt
+  url: llms/vergent-bioscience-llms.txt
+- type: Conformance
+  url: conformance/vergent-bioscience-conformance.yml
+- type: Plans
+  url: plans/vergent-bioscience-plans-pricing.yml
+- type: Support
+  url: https://www.vergentbio.com/contact
+- type: TermsOfService
+  url: https://www.vergentbio.com/terms
+- type: PrivacyPolicy
+  url: https://www.vergentbio.com/privacy
+x-enrichment:
+  date: '2026-09-02'
+  status: enriched
+  artifacts_added: 10
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: null
+  detail: >-
+    Vergent Bioscience is a clinical-stage biotech with no developer program, but STEP 0b
+    contract discovery found two real machine-readable surfaces on its own host: a
+    Wix-generated /llms.txt (HTTP 200, 3458 bytes) and a live anonymous MCP endpoint at
+    /_api/mcp whose tools/list returned HTTP 200 with 9 schema-bearing tools. No OpenAPI,
+    GraphQL, AsyncAPI, .proto or WSDL exists on any company host.
+  evidence:
+    - url: https://www.vergentbio.com/llms.txt
+      status: 200
+    - url: https://www.vergentbio.com/_api/mcp
+      status: 200
+    - url: https://www.vergentbio.com/openapi.json
+      status: 400
+    - url: https://www.vergentbio.com/.well-known/agent-card.json
+      status: 400
+  checked: '2026-09-02'

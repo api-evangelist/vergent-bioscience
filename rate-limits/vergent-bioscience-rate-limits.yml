@@ -1,0 +1,22 @@
+generated: '2026-09-02'
+method: probed
+source: https://www.vergentbio.com/_api/mcp
+description: >-
+  Rate limits for the Vergent Bioscience site MCP endpoint. None are published and none were
+  signalled on the wire.
+limit_count: 0
+limits: []
+response_headers:
+  observed: []
+  note: >-
+    Full response headers were captured from a live POST tools/list on 2026-09-02
+    (HTTP 200). They contained content-type, mcp-session-id, etag, pragma, cache-control,
+    x-wix-request-id, set-cookie, x-robots-tag, server, x-content-type-options,
+    accept-ranges, date, x-served-by, x-cache, vary, strict-transport-security, x-seen-by,
+    content-length and via. No X-RateLimit-*, RateLimit-* or Retry-After header was present.
+exhaustion_status_code: unknown
+notes:
+  - >-
+    Honest zero. Vergent Bioscience publishes no developer documentation, so there is no
+    limits page to read; the endpoint is Wix-operated and any throttling is a platform
+    concern the company does not document.

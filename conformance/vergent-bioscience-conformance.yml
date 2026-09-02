@@ -1,0 +1,56 @@
+generated: '2026-09-02'
+method: probed
+source: https://www.vergentbio.com/_api/mcp
+description: >-
+  Standards conformance asserted only where a probe or the provider's own published text
+  supports it. Vergent Bioscience is a clinical-stage biotechnology company with no software
+  product and no developer program; the only conformance evidence available is from the
+  Wix-provided MCP endpoint on its domain.
+conformance:
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    evidence: >-
+      POST https://www.vergentbio.com/_api/mcp with method tools/list returned HTTP 200,
+      a JSON-RPC 2.0 result object containing 9 tools each carrying a JSON Schema inputSchema,
+      and an Mcp-Session-Id response header (2026-09-02). Raw response saved at
+      mcp/vergent-bioscience-mcp-tools.json.
+  - id: jsonrpc-2.0
+    name: JSON-RPC 2.0
+    conforms: true
+    evidence: >-
+      Responses carry "jsonrpc":"2.0" and echo the request id; observed on both the tools/list
+      and tools/call probes on 2026-09-02.
+  - id: json-schema
+    name: JSON Schema (tool input schemas)
+    conforms: true
+    evidence: >-
+      Every one of the 9 probed tools declares an inputSchema with type/properties/required.
+  - id: llmstxt
+    name: llms.txt
+    conforms: true
+    evidence: >-
+      GET https://www.vergentbio.com/llms.txt returned HTTP 200, text/plain, 3458 bytes with
+      the H1 + blockquote + sectioned-link structure the convention specifies.
+  - id: rfc9116
+    name: security.txt (RFC 9116)
+    conforms: false
+    evidence: 'GET https://www.vergentbio.com/.well-known/security.txt returned HTTP 400 (HTML error page).'
+  - id: rfc8615
+    name: Well-known URIs (RFC 8615)
+    conforms: false
+    evidence: 'Every probed /.well-known/* path returned HTTP 400 with an HTML body. See well-known/.'
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: false
+    evidence: 'No authorization server metadata served; the MCP endpoint is anonymous.'
+domain_standards:
+  probed: true
+  found: none
+  note: >-
+    Vergent's market is intraoperative fluorescence imaging / clinical-stage oncology. The
+    domain standards that would apply to a software surface here — HL7 v2, FHIR, DICOM, CDISC
+    ODM/SDTM for trial data — have no corresponding surface to declare them, because the
+    company publishes no clinical or imaging API. Reward-only dimension: recorded as absent,
+    not as a failure. No Compliance pointer is emitted; no certification program (SOC 2,
+    ISO 27001, HIPAA attestation) is published on the company's site.

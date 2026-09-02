@@ -1,0 +1,123 @@
+generated: '2026-09-02'
+method: probed
+source: https://www.vergentbio.com/_api/mcp
+name: Vergent Bioscience Site MCP
+slug: vergent-bioscience
+description: >-
+  Vergent Bioscience serves a live, anonymous Model Context Protocol endpoint from its own
+  domain at https://www.vergentbio.com/_api/mcp. The server is provided by the Wix Site MCP
+  platform (the company's marketing site runs on Wix), not authored by Vergent, but it is
+  served on the company host, it self-identifies as site "Vergent Bioscience" in every tool
+  description, and it is advertised from the company's own /llms.txt. A tools/list call
+  returned 9 tools with full JSON Schema inputSchema and required no credentials.
+protocol: Model Context Protocol
+transport: streamable-http
+platform: Wix Site MCP
+platform_docs: https://dev.wix.com/docs/develop-websites/articles/get-started/about-the-wix-site-mcp
+advertised_in: https://www.vergentbio.com/llms.txt
+
+deployment:
+  mode: remote
+  endpoint: https://www.vergentbio.com/_api/mcp
+  install: null
+  package: null
+  auth: none
+  verified: probed
+
+x-evidence:
+  fetched: '2026-09-02'
+  url: https://www.vergentbio.com/_api/mcp
+  method: POST
+  request: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+  http_status: 200
+  content_type: application/json; charset=utf-8
+  response_bytes: 28817
+  mcp_session_id_header: present
+  tool_count: 9
+  raw: mcp/vergent-bioscience-mcp-tools.json
+  second_probe:
+    url: https://www.vergentbio.com/_api/mcp
+    request: 'tools/call GetBusinessDetails {}'
+    http_status: 200
+    result: >-
+      Returned live site details for businessName "Vergent Bioscience" (Minneapolis, MN;
+      info@vergentbio.com), confirming the endpoint is bound to this company's site and not
+      a generic Wix host.
+
+authentication:
+  connect: none
+  note: >-
+    No credentials are required to connect or to call tools/list. Two of the nine tools
+    (CallWixSiteAPI, ExecuteWixAPI) additionally require a visitorToken, which any caller can
+    mint anonymously via the GenerateVisitorToken tool on the same endpoint. Confirmed by the
+    provider's own llms.txt: "No authentication required to connect to the MCP endpoint".
+
+status: live
+
+tools:
+  - name: GetBusinessDetails
+    category: site-content
+    parameters: []
+    required: []
+    summary: Get business and site details for "Vergent Bioscience" (timezone, email, phone, address).
+  - name: SearchInSite
+    category: site-content
+    parameters: [searchTerm]
+    required: [searchTerm]
+    summary: Search the site "Vergent Bioscience" for information.
+  - name: SearchSiteApiDocs
+    category: docs
+    parameters: [searchTerm]
+    required: [searchTerm]
+    summary: Search the API documentation for the Wix business solutions installed on this site.
+  - name: GenerateVisitorToken
+    category: auth
+    parameters: []
+    required: []
+    summary: Create a new visitor session and obtain a visitor access token for the site.
+  - name: CallWixSiteAPI
+    category: action
+    parameters: [visitorToken, url, method, body]
+    required: [visitorToken, url, method]
+    summary: Call Wix API methods on the site on a visitor's behalf.
+  - name: ExecuteWixAPI
+    category: action
+    parameters: [code, reason, hasMutations, sourceDocUrls, visitorToken]
+    required: [code, reason, hasMutations, sourceDocUrls, visitorToken]
+    summary: >-
+      Run JavaScript against the Wix REST API on the site, on the visitor's behalf. Carries an
+      explicit hasMutations flag, so the caller declares up front whether the call writes.
+  - name: ReadFullDocsArticle
+    category: docs
+    parameters: [articleUrl]
+    required: [articleUrl]
+    summary: Fetch a full article from the Wix developer documentation portal.
+  - name: ReadFullDocsMethodSchema
+    category: docs
+    parameters: [articleUrl, reason]
+    required: [articleUrl, reason]
+    summary: Fetch the full schema for a Wix API method before calling it.
+  - name: BrowseWixRESTDocsMenu
+    category: docs
+    parameters: [menuUrl, reason]
+    required: [reason]
+    summary: Browse the Wix REST API documentation menu hierarchy.
+
+notes:
+  - >-
+    Platform-authored, not company-authored. The tool set is identical to every other Wix Site
+    MCP deployment except for the site name and endpoint interpolated into the descriptions.
+    Recorded as a real agent surface because it is live, anonymous, and served on the company's
+    own host — but it exposes site content and generic Wix platform APIs, not any product API
+    of Vergent Bioscience. Vergent's product is an investigational imaging agent, and the
+    company publishes no developer program.
+  - >-
+    Six of the nine tools are Wix documentation/plumbing tools. Only GetBusinessDetails and
+    SearchInSite return anything specific to Vergent Bioscience.
+  - >-
+    The tool descriptions returned by the server embed lengthy <agent-mandatory-instructions>
+    directive blocks aimed at the calling agent. They are recorded verbatim in the saved raw
+    manifest as data, not followed as instructions.
+  - >-
+    No OpenAPI, GraphQL SDL, AsyncAPI, .proto or WSDL is published anywhere on the company's
+    hosts, so no tool crosswalk is emitted — there are no REST operationIds to bind against.
