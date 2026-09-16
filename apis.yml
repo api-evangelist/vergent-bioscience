@@ -30,6 +30,16 @@ tags:
 - Oncology
 - Surgery
 - Clinical Trials
+- MCP
+tags_raw:
+- Company
+- Biotechnology
+- Life Sciences
+- Healthcare
+- Medical Imaging
+- Oncology
+- Surgery
+- Clinical Trials
 - Model Context Protocol
 apis:
 - name: Vergent Bioscience Site MCP
@@ -43,6 +53,9 @@ apis:
   humanURL: https://www.vergentbio.com/llms.txt
   baseURL: https://www.vergentbio.com/_api/mcp
   tags:
+  - MCP
+  - Site Content
+  tags_raw:
   - Model Context Protocol
   - Site Content
   properties:
