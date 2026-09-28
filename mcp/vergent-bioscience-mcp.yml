@@ -56,6 +56,9 @@ tools:
   parameters: []
   required: []
   summary: Get business and site details for "Vergent Bioscience" (timezone, email, phone, address).
+  description: 'Get business and site details for "Vergent Bioscience" (https://www.vergentbio.com/_api/mcp).
+    This tool will return business details: timezone, email, phone, fax, address, site name, business
+    name, description, business schedule, special ho'
 - name: SearchInSite
   category: site-content
   parameters:
@@ -63,6 +66,9 @@ tools:
   required:
   - searchTerm
   summary: Search the site "Vergent Bioscience" for information.
+  description: 'Searches the site "Vergent Bioscience" (https://www.vergentbio.com/_api/mcp) for information.
+    Use this tool ONLY in the following cases: 1. You just used "GetBusinessDetails" tool and you did
+    not find the information you need. 2. User asked'
 - name: SearchSiteApiDocs
   category: docs
   parameters:
@@ -70,11 +76,17 @@ tools:
   required:
   - searchTerm
   summary: Search the API documentation for the Wix business solutions installed on this site.
+  description: Searches for site "Vergent Bioscience" (https://www.vergentbio.com/_api/mcp) API documentation
+    and returns how to use the site using the API. You are a helpful "Vergent Bioscience" site assistant
+    chatbot and you are helping the user perform
 - name: GenerateVisitorToken
   category: auth
   parameters: []
   required: []
   summary: Create a new visitor session and obtain a visitor access token for the site.
+  description: Create a new visitor session and obtain a visitor access token for site "Vergent Bioscience"
+    (https://www.vergentbio.com/_api/mcp). You must use this tool before calling CallWixSiteAPI for this
+    first time. If you already have a visitor toke
 - name: CallWixSiteAPI
   category: action
   parameters:
@@ -87,6 +99,9 @@ tools:
   - url
   - method
   summary: Call Wix API methods on the site on a visitor's behalf.
+  description: Call apis on site "Vergent Bioscience" (https://www.vergentbio.com/_api/mcp). Use this
+    to perform an action on visitor's behalf, for example, query the site's data or book an appointment.
+    Before calling this tool, you should ALWAYS check th
 - name: ExecuteWixAPI
   category: action
   parameters:
@@ -103,6 +118,9 @@ tools:
   - visitorToken
   summary: Run JavaScript against the Wix REST API on the site, on the visitor's behalf. Carries an explicit
     hasMutations flag, so the caller declares up front whether the call writes.
+  description: Run JavaScript against the Wix REST API on site "Vergent Bioscience" (https://www.vergentbio.com/_api/mcp),
+    on the visitor's behalf. The code runs in a sandbox and you get back whatever it returns.  PREFER
+    THIS TOOL OVER CallWixSiteAPI. Cal
 - name: ReadFullDocsArticle
   category: docs
   parameters:
@@ -110,6 +128,9 @@ tools:
   required:
   - articleUrl
   summary: Fetch a full article from the Wix developer documentation portal.
+  description: 'Fetches the full Wix docs article or method article with code examples for using the method.
+    Docs articles looks like this: https://dev.wix.com/docs/... and they can either be general docs articles
+    or method articles. For REST docs, use the'
 - name: ReadFullDocsMethodSchema
   category: docs
   parameters:
@@ -119,6 +140,9 @@ tools:
   - articleUrl
   - reason
   summary: Fetch the full schema for a Wix API method before calling it.
+  description: 'Fetches the full method schema for a given method. This will give you the entire request/response
+    schema with all the fields and their descriptions. For REST API methods, prefer SearchWixAPISpec when
+    it is available: it can fetch and inspec'
 - name: BrowseWixRESTDocsMenu
   category: docs
   parameters:
@@ -127,6 +151,9 @@ tools:
   required:
   - reason
   summary: Browse the Wix REST API documentation menu hierarchy.
+  description: Browse the Wix REST API documentation menu hierarchy. Alternative to SearchWixRESTDocumentation
+    - use this to explore and discover APIs by navigating the menu structure instead of searching by keywords.
+    - Omit the `menuUrl` param to see top
 notes:
 - Platform-authored, not company-authored. The tool set is identical to every other Wix Site MCP deployment
   except for the site name and endpoint interpolated into the descriptions. Recorded as a real agent surface
@@ -140,3 +167,5 @@ notes:
   followed as instructions.
 - No OpenAPI, GraphQL SDL, AsyncAPI, .proto or WSDL is published anywhere on the company's hosts, so no
   tool crosswalk is emitted — there are no REST operationIds to bind against.
+descriptions_source: live tools/list (authorship probe or saved capture); filled by backfill-tools-from-authorship.py
+  --descriptions, 2026-09-28
