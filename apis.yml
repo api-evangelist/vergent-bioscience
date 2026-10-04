@@ -67,6 +67,9 @@ apis:
     url: conventions/vergent-bioscience-conventions.yml
   - type: RateLimits
     url: rate-limits/vergent-bioscience-rate-limits.yml
+  x-surface: platform-generated
+  x-platform: wix
+  x-platform-surface: site-mcp
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
